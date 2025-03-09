@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: fato_pedidos
+    description: "Tabela fato consolidando os pedidos, vendas e seus detalhes."
+    columns:
+      - name: pk_pedido_detalhe
+        description: "Chave única do item do pedido (pedido + produto)."
+        tests:
+          - unique
+          - not_null
+
+      - name: fk_pedido
+        description: "ID do pedido."
+
+      - name: fk_cliente
+        description: "Chave estrangeira para dim_cliente."
+        tests:
+          - not_null
+
+      - name: fk_cartao_credito
+        description: "Chave estrangeira para dim_cartao."
+
+      - name: fk_motivo_venda_agrupado
+        description: "Lista de motivos de venda concatenados para o pedido."
+
+      - name: fk_produto
+        description: "Chave estrangeira para dim_produto."
+        tests:
+          - not_null
+
+      - name: fk_tempo
+        description: "Data da compra."
+        tests:
+          - not_null
+
+      - name: fk_territorio
+        description: "Chave estrangeira para dim_territorio."
+        tests:
+          - not_null
+
+      - name: quantidade
+        description: "Quantidade de produtos comprados."
+
+      - name: preco_unitario
+        description: "Preço unitário do produto."
+
+      - name: desconto
+        description: "Desconto aplicado ao produto."
+
+      - name: total_bruto
+        description: "Total bruto (quantidade × preço unitário)."
+
+      - name: total_liquido
+        description: "Total líquido (total bruto - desconto)."
+
+      - name: valor_frete
+        description: "Valor total do frete atribuído ao pedido."

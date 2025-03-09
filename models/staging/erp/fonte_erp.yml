@@ -102,6 +102,28 @@ sources:
             description: "Cidade do cliente"
           - name: POSTALCODE
             description: "Código postal"
+            tests:
+              - not_null
+          - name: STATEPROVINCEID
+            description: "ID do estado, referência para StateProvince"
+
+      - name: StateProvince
+        description: "Tabela de estados e regiões"
+        columns:
+          - name: STATEPROVINCEID
+            description: "ID único do estado"
+            tests:
+              - unique
+              - not_null
+          - name: NAME
+            description: "Nome do estado"
+            tests:
+              - not_null
+          - name: COUNTRYREGIONCODE
+            description: "Código do país"
+            tests:
+              - not_null
+
       - name: CreditCard
         description: "Tabela de cartões de crédito dos clientes"
         columns:
@@ -114,3 +136,79 @@ sources:
             description: "Tipo do cartão de crédito (Visa, Mastercard, etc.)"
             tests:
               - not_null
+
+      - name: SalesReason
+        description: "Tabela de motivos pelos quais os pedidos foram realizados"
+        columns:
+          - name: SALESREASONID
+            description: "ID único do motivo da venda"
+            tests:
+              - unique
+              - not_null
+          - name: NAME
+            description: "Nome do motivo da venda"
+            tests:
+              - not_null
+
+      - name: SalesOrderHeader
+        description: "Cabeçalho dos pedidos de venda."
+        columns:
+          - name: SALESORDERID
+            description: "ID do pedido"
+            tests:
+              - unique
+              - not_null
+
+          - name: CUSTOMERID
+            description: "ID do cliente"
+
+          - name: SHIPTOADDRESSID
+            description: "ID do endereço de entrega"
+
+          - name: CREDITCARDID
+            description: "ID do cartão de crédito"
+
+          - name: ORDERDATE
+            description: "Data do pedido"
+
+          - name: FREIGHT
+            description: "Valor total do frete"
+
+          - name: TOTALDUE
+            description: "Valor total do pedido"
+
+      - name: SalesOrderDetail
+        description: "Detalhes dos produtos nos pedidos de venda."
+        columns:
+          - name: SALESORDERID
+            description: "ID do pedido (chave estrangeira para SalesOrderHeader)"
+
+          - name: SALESORDERDETAILID
+            description: "ID único do detalhe do pedido"
+
+          - name: PRODUCTID
+            description: "ID do produto vendido"
+
+          - name: ORDERQTY
+            description: "Quantidade de produtos comprados"
+
+          - name: UNITPRICE
+            description: "Preço unitário do produto"
+
+          - name: UNITPRICEDISCOUNT
+            description: "Desconto aplicado ao produto"
+            
+      - name: SalesOrderHeaderSalesReason
+        description: "Relacionamento entre pedidos e motivos de venda."
+        columns:
+          - name: SALESORDERID
+            description: "ID do pedido (chave estrangeira para SalesOrderHeader)."
+            tests:
+              - not_null
+
+          - name: SALESREASONID
+            description: "ID do motivo da venda (chave estrangeira para SalesReason)."
+            tests:
+              - not_null
+
+      
